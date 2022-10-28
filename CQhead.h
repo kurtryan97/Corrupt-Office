@@ -13,115 +13,101 @@ using namespace std;
 
 class CorruptQueue;
 
-queue<CorruptQueue> reg_client;
-
 class CorruptQueue {
 protected:
     string sv_status = "leave";
 
 
 public:
-    class RegQ {
-
-    protected:
-        string name = "";
-        string cl_type = "";
+    class RegularQueue {
+    private:
+        string name;
 
     public:
-        RegQ() {}
-        RegQ(string nm , string cl = "regular") : name(nm), cl_type(cl) {}
-
-        virtual void inData(string nm) {
-            name = nm;
+        RegularQueue() {}
+        RegularQueue(string nm) : name(nm) {}
+        void inData(string n) {
+            name = n;
         }
 
-        virtual string GetName() {
-            return name;
-        }
-
-        virtual string GetType() {
-            return cl_type;
+        void outData() {
+            cout << name;
         }
     };
 
-    class Vstack {
-
-    protected:
-        string name = "";
-        string cl_type = "";
+    class Pointer {
+    private:
+        RegularQueue rq;
 
     public:
-        Vstack() {}
-        Vstack(string nm , string cl = "regular") : name(nm), cl_type(cl) {}
+        Pointer *nxt;
+        Pointer *prv;
 
-        virtual void inData(string nm) {
-            name = nm;
+        void setRegQ(RegularQueue r1) {
+            rq = r1;
         }
 
-        virtual string GetName() {
-            return name;
-        }
-
-        virtual string GetType() {
-            return cl_type;
+        RegularQueue getRegQ() {
+            return rq;
         }
     };
 
-    virtual CorruptQueue::RegQ GetFrontReg() {
-        RegQ t;
-        t.GetName();
-        return t;
-    }
 
-    virtual void lineupReg(string n1) {
-        RegQ tmp;
-        tmp.inData(n1);
-    }
+    /*
+     *  VIP Stack class
+     */
 
-    virtual void lineupVIP(string n1) {
-        Vstack tmp;
-        tmp.inData(n1);
-    }
+    class VIPStack {
+        int top;
 
-    virtual void serve() {
+    protected:
+        string name = "";
 
-    }
+    public:
+        string vip_client[3];
 
-    virtual void arrived(string status) {
+        VIPStack() {
+            top = -1;
+        }
 
-    }
-
-    virtual void leave(string status) {
-
-    }
-};
-
-class SQSimulation {
-private:
-
-public:
-
-    SQSimulation() {}
-
-    SQSimulation(string s1, string s2, string s3) {
-        string string1 = s1;
-        string string2 = s2;
-        string string3 = s3;
-
-        if(string1 == "lineup") {
-            if(string3 == "regular") {
-                CorruptQueue tmp;
-                tmp.lineupReg(string2);
-                reg_client.push(tmp);
-                cout << "Regular client " << string2 << " lines up at RegularQueue" << endl;
-                tmp.GetFrontReg();
+        void pushStack(string x) {
+            if(top >= 20) {
+                cout << "Stack overflow" << endl;
+            } else {
+                vip_client[++top] = x;
             }
         }
-    }
 
-    virtual CorruptQueue FrontData() {
-        return reg_client.front();
-    }
+        string popStack() {
+            if(top < 0) {
+                cout << "Stack underflow" << endl;
+            } else {
+                string d = vip_client[top--];
+                return d;
+            }
+        }
+
+        void topStack() {
+            cout << vip_client[top];
+        }
+
+        void size_stack() {
+            cout << top + 1 << endl;
+        }
+
+        int isEmpty() {
+            if(top < 0)
+            {
+                int val = 1;
+                return val;
+            }
+            else
+            {
+                int val = 0;
+                return val;
+            }
+        }
+    };
 };
 
 #endif //CORRUPTQUEUE_CQHEAD_H
