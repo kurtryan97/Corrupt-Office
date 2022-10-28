@@ -3,8 +3,9 @@
 //
 
 #include "CQhead.h"
-CorruptQueue::RegularQueue tmpQ;
-CorruptQueue::VIPStack tmpS;
+CorruptQueue::RegularQueue reg_client;
+CorruptQueue::VIPStack vip_client;
+
 CorruptQueue::Pointer *head = NULL;
 CorruptQueue::Pointer *tail = NULL;
 
@@ -51,7 +52,6 @@ private:
 
 public:
     string  svStatus = "leave";
-    SQSimulation() {}
 
     // lineup part
     SQSimulation(string s1, string s2, string s3) {
@@ -59,21 +59,21 @@ public:
 
         if(svStatus == "leave") {
             if(type == "regular") {
-                tmpQ.inData(s2);
-                push_back(tmpQ);
+                reg_client.inData(s2);
+                push_back(reg_client);
                 cout << "Regular client " << s2 << " lines up at RegularQueue" << endl;
             } else if(type == "VIP") {
-                tmpS.pushStack(s2);
+                vip_client.pushStack(s2);
                 cout << "VIP client " << s2 << " lines up at VIPStack" << endl;
             }
         } else if(svStatus == "arrive") {
             if(type == "regular") {
-                tmpQ.inData(s2);
-                push_back(tmpQ);
+                reg_client.inData(s2);
+                push_back(reg_client);
                 cout << "Regular client " << s2 << " lines up at RegularQueue" << endl;
             } else if(type == "VIP") {
-                tmpQ.inData(s2);
-                push_back(tmpQ);
+                reg_client.inData(s2);
+                push_back(reg_client);
                 cout << "VIP client " << s2 << " lines up at RegularQueue" << endl;
             }
         }
@@ -82,33 +82,25 @@ public:
     // Serve part
     SQSimulation(string s1) {
         string value = s1;
-        if (value == "serve") {
-            if(tmpS.isEmpty() == 1) {
-                tmpQ = head->getRegQ();
-                cout << "Now serving ";
-                tmpQ.outData();
-                cout << " from RegularQueue" << endl;
-                pop_front();
-            } else {
-                cout << "Now serving ";
-                tmpS.topStack();
-                cout << " from VIPStack" << endl;
-                tmpS.popStack();
-            }
+        if(vip_client.isEmpty() == true) {
+            reg_client = head->getRegQ();
+            cout << "Now serving ";
+            reg_client.outData();
+            cout << " from RegularQueue" << endl;
+            pop_front();
+        } else {
+            string val = vip_client.popStack();
+            cout << "Now serving " << val << " from VIPStack" << endl;
         }
     }
 
     SQSimulation(string s1, string s2) {
         string value = s1;
-
         if(value == "arrive") {
-            CorruptQueue::VIPStack tmp;
-            if(tmp.isEmpty() == 0) {
-                while(tmp.isEmpty() == 0) {
-                    CorruptQueue::RegularQueue tmpQ;
-                    tmpQ.inData(tmp.popStack());
-                    push_back(tmpQ);
-                    tmp.popStack();
+            if(!vip_client.isEmpty()) {
+                while(!vip_client.isEmpty()) {
+                    reg_client.inData(vip_client.popStack());
+                    push_back(reg_client);
                 }
             }
             svStatus = "arrive";

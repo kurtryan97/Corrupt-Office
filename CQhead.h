@@ -95,16 +95,14 @@ public:
             cout << top + 1 << endl;
         }
 
-        int isEmpty() {
+        bool isEmpty() {
             if(top < 0)
             {
-                int val = 1;
-                return val;
+                return true;
             }
             else
             {
-                int val = 0;
-                return val;
+                return false;
             }
         }
     };
