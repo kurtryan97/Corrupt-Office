@@ -9,7 +9,7 @@ int main() {
 
     /*
     *     implementation without using an object
-    *     (uncomment/comment this if you want to use/unuse without object).
+    *     (uncomment/comment this if you want to use/unused without object).
     */
 
     CQSimulation("lineup","John","regular");
@@ -45,6 +45,7 @@ int main() {
      *  implementation using object (simulate).
      *  (uncomment/comment this if you want to use/unuse with object instead).
      */
+
 //    simulate.lineup("lineup","John","regular");
 //    simulate.lineup("lineup","Bob","regular");
 //    simulate.lineup("lineup","Tom","regular");
