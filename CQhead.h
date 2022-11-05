@@ -199,8 +199,8 @@ class CQSimulation {
         }
     }
 
-    CQSimulation(const string &s_1, const string &s_2) {                                                     // arrived or leave method
-        sup_stat.change_stat(s_1);
+    CQSimulation(const string &string1, const string &string2) {                                                     // arrived or leave method
+        sup_stat.change_stat(string1);
         if(sup_stat.isArrive()) {
             while(!vip_client.isEmpty()) {
                 Node *temp = new Node;
@@ -211,7 +211,7 @@ class CQSimulation {
         }
     }
 
-    explicit CQSimulation(const string &s_1) {                                                              //  Serving method
+    explicit CQSimulation(const string &string1) {                                                              //  Serving method
         if(sup_stat.isArrive()) {
             cout << "Now serving ";
             regular_client.frontQueue();
@@ -236,28 +236,28 @@ class CQSimulation {
      *      Using object
      */
 
-    void lineup(const string &s_1, const string &s_2, const string &s_3) {                          // Lineup method
+    void lineup(const string &string1, const string &string2, const string &string3) {                          // Lineup method
         if(sup_stat.isArrive()) {
-            if(s_3 == "regular") {
-                regular_client.insertQueue(s_2);
-                cout << "Regular client " << s_2 << " lines up at RegularQueue" << endl;
-            } else if(s_3 == "VIP") {
-                regular_client.insertQueue(s_2);
-                cout << "VIP client " << s_2 << " lines up at RegularQueue" << endl;
+            if(string3 == "regular") {
+                regular_client.insertQueue(string2);
+                cout << "Regular client " << string2 << " lines up at RegularQueue" << endl;
+            } else if(string3 == "VIP") {
+                regular_client.insertQueue(string2);
+                cout << "VIP client " << string2 << " lines up at RegularQueue" << endl;
             }
         } else {
-            if(s_3 == "regular") {
-                regular_client.insertQueue(s_2);
-                cout << "Regular client " << s_2 << " lines up at RegularQueue" << endl;
-            } else if(s_3 == "VIP") {
-                vip_client.pushStack(s_2);
-                cout << "VIP client " << s_2 << " lines up at VIPStack" << endl;
+            if(string3 == "regular") {
+                regular_client.insertQueue(string2);
+                cout << "Regular client " << string2 << " lines up at RegularQueue" << endl;
+            } else if(string3 == "VIP") {
+                vip_client.pushStack(string2);
+                cout << "VIP client " << string2 << " lines up at VIPStack" << endl;
             }
         }
     }
 
-    void supervisor_status(const string &s_1, const string &s_2) {                                  //  method that checks if the supervisor is arrived
-        sup_stat.change_stat(s_1);
+    void supervisor_status(const string &string1, const string &string2) {                                  //  method that checks if the supervisor is arrived
+        sup_stat.change_stat(string1);
         if(sup_stat.isArrive()) {
             while (!vip_client.isEmpty()) {
                 Node *temp = new Node;
@@ -268,7 +268,7 @@ class CQSimulation {
         }
     }
 
-    void serve(const string &s_1) {                                                                 //  serving method
+    void serve(const string &string1) {                                                                 //  serving method
         if(sup_stat.isArrive()) {
             cout << "Now serving ";
             regular_client.frontQueue();
